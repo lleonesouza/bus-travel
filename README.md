@@ -42,3 +42,9 @@ The test perform the following action:
 2. Update this BusTravel
 3. Delete this BusTravel
 4. Get the BusTravel to verify if is Deleted
+
+## POSTMAN
+
+Public Collection BusTravel:
+
+https://www.postman.com/altimetry-specialist-94040185/workspace/bustravel
