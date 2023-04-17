@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator db {
+  provider = "go run github.com/prisma/prisma-client-go"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model BusTravel {
+  id                Int        @id @default(autoincrement())
+  origin            String
+  destination       String?
+  departureTime     DateTime
+  arrivalTime       DateTime
+  price             Float
+  hasWiFi           Boolean?
+  hasBathroom       Boolean?
+  hasAirConditioner Boolean?
+}

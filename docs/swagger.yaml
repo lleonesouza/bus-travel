@@ -1,0 +1,298 @@
+basePath: /
+definitions:
+  dtos.BusTravel:
+    properties:
+      arrivalTime:
+        example: "2022-01-01T15:00:00Z"
+        type: string
+      departureTime:
+        example: "2022-01-01T10:00:00Z"
+        type: string
+      destination:
+        example: Rio de Janeiro
+        type: string
+      hasAirConditioner:
+        example: true
+        type: boolean
+      hasBathroom:
+        example: true
+        type: boolean
+      hasWiFi:
+        example: true
+        type: boolean
+      id:
+        example: 1
+        type: integer
+      origin:
+        example: São Paulo
+        type: string
+      price:
+        example: 50
+        minimum: 0
+        type: number
+    required:
+    - arrivalTime
+    - departureTime
+    - origin
+    - price
+    type: object
+  dtos.BusTravelCreateInput:
+    properties:
+      arrivalTime:
+        example: "2022-01-01T15:00:00Z"
+        type: string
+      departureTime:
+        example: "2022-01-01T10:00:00Z"
+        type: string
+      destination:
+        example: Rio de Janeiro
+        type: string
+      hasAirConditioner:
+        example: true
+        type: boolean
+      hasBathroom:
+        example: true
+        type: boolean
+      hasWiFi:
+        example: true
+        type: boolean
+      origin:
+        example: São Paulo
+        type: string
+      price:
+        example: 50
+        minimum: 0
+        type: number
+    required:
+    - arrivalTime
+    - departureTime
+    - origin
+    - price
+    type: object
+  dtos.BusTravelUpdateInput:
+    properties:
+      arrivalTime:
+        example: "2022-01-01T15:00:00Z"
+        type: string
+      departureTime:
+        example: "2022-01-01T10:00:00Z"
+        type: string
+      destination:
+        type: string
+      hasAirConditioner:
+        example: true
+        type: boolean
+      hasBathroom:
+        example: true
+        type: boolean
+      hasWiFi:
+        example: true
+        type: boolean
+      origin:
+        type: string
+      price:
+        example: 50
+        type: number
+    type: object
+  errors.BadRequestError:
+    properties:
+      details:
+        example: 'Key: ''BusTravelCreateInput.Origin'' Error:Field validation for
+          ''Origin'' failed on the ''required'' tag'
+        type: string
+      status:
+        example: 400
+        type: integer
+      title:
+        example: BadRequestError
+        type: string
+    type: object
+  errors.InternalServerError:
+    properties:
+      details:
+        example: Something goes wrong. Please try again
+        type: string
+      status:
+        example: 500
+        type: integer
+      title:
+        example: InternalServerError
+        type: string
+    type: object
+  errors.NotFoundError:
+    properties:
+      details:
+        example: The email 'john@doe.com' is not found in the system.
+        type: string
+      status:
+        example: 404
+        type: integer
+      title:
+        example: NotFoundError
+        type: string
+    type: object
+host: localhost:1324
+info:
+  contact:
+    email: lleonesouza@live.com
+    name: API Support
+    url: https://github.com/lleonesouza
+  description: This is a simple Product (bus-travel) CRUD server
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: bus-travel
+  version: "1.0"
+paths:
+  /bus-travels:
+    get:
+      consumes:
+      - application/json
+      description: Get all bus travels
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.BusTravel'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.BadRequestError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalServerError'
+      tags:
+      - bus-travel
+    post:
+      consumes:
+      - application/json
+      description: Create a bus-travel.
+      parameters:
+      - description: Create BusTravel Input
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.BusTravelCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.BusTravel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.BadRequestError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalServerError'
+      tags:
+      - bus-travel
+  /bus-travels/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete BusTravel
+      parameters:
+      - description: BusTravel ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.BadRequestError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFoundError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalServerError'
+      tags:
+      - bus-travel
+    get:
+      consumes:
+      - application/json
+      description: Find bus-travel.
+      parameters:
+      - description: BusTravel ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.BusTravel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.BadRequestError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFoundError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalServerError'
+      tags:
+      - bus-travel
+    put:
+      consumes:
+      - application/json
+      description: Update BusTravel
+      parameters:
+      - description: BusTravel ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: BusTravel
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.BusTravelUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.BusTravel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.BadRequestError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFoundError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalServerError'
+      tags:
+      - bus-travel
+swagger: "2.0"

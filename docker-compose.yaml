@@ -1,0 +1,35 @@
+version: "2.2"
+
+services:
+  bus-travel:
+    container_name: bus-travel
+    build:
+      context: ./
+      dockerfile: ./dockerfile.yaml
+    ports:
+      - '1324:1324'
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_ROOT_PASSWORD: '1234'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:
